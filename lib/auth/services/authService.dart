@@ -32,9 +32,8 @@ class AuthService {
     );
 
     Map<String, dynamic> data = json.decode(response.body);
-    //print(data);
+    // print(data);
 SharedPreferences prefs = await SharedPreferences.getInstance();
-print(data["token"]);
 await prefs.setString('token', data['token']);
 if (!context.mounted) return;
 final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -70,8 +69,7 @@ callback(true);
       },
       body: user.toJson(),
     );
-    print(response.body);
-    print(response.statusCode);
+
    
     if (response.statusCode == 200) {
       return true;
