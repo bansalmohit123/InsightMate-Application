@@ -7,7 +7,6 @@ class UserProvider extends ChangeNotifier {
     username: '',
     email: '',
     password: '',
-
     token: '',
   );
 
@@ -15,9 +14,8 @@ class UserProvider extends ChangeNotifier {
 
   void setUser(String user) {
     // Use a logging framework instead of print
-    debugPrint("+++++");
+ 
     debugPrint(user);
-    debugPrint("+++++");
     _user = User.fromJson(user);
     notifyListeners();
   }

@@ -4,7 +4,10 @@ import 'package:insightmate/auth/screens/signUp.dart';
 import 'package:insightmate/auth/services/authService.dart';
 import 'package:insightmate/chat/chat_Screen.dart';
 import 'package:insightmate/dashBoard.dart';
+import 'package:insightmate/providers/file.dart';
 import 'package:insightmate/providers/userProvider.dart';
+import 'package:insightmate/providers/web.dart';
+import 'package:insightmate/providers/youtube.dart';
 import 'package:insightmate/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +22,9 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => FileProvider()),
+        ChangeNotifierProvider(create: (_) => WebProvider()),
+        ChangeNotifierProvider(create: (_) => YoutubeProvider()),
       ],
       child: const MyApp(),
     ),
@@ -51,8 +57,8 @@ class _MyAppState extends State<MyApp> {
         hintColor:const  Color(0xFF3FD2C7),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      // home: isUserLoggedIn?const DashboardPage(): const SignUpPage(),
-      home: const DashboardPage(),
+      home: isUserLoggedIn?const DashboardPage(): const SignUpPage(),
+      // home: const DashboardPage(),
       onGenerateRoute: (settings) => generateRoute(settings),
     );
   }

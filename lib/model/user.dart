@@ -6,7 +6,6 @@
     final String username;
     final String email;
     final String password;
-
     final String token;
 
     User({
@@ -14,8 +13,6 @@
       required this.username,
       required this.email,
       required this.password,
-      
-
       required this.token,
     });
 
@@ -25,7 +22,6 @@
         'username': username,
         'email': email,
         'password': password,
-
         'token': token,
       };
     }
@@ -36,8 +32,6 @@
         username: map['username'] ?? '',
         email: map['email'] ?? '',
         password: map['password'] ?? '',
-     
-  
         token: map['token'] ?? '',
       );
     }
