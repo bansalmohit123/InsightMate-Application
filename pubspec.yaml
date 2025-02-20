@@ -38,6 +38,7 @@ dependencies:
   shared_preferences: 
   provider:
   http:
+  file_picker:
 
 dev_dependencies:
   flutter_test:
