@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insightmate/forms/chat_service.dart';
 import 'package:insightmate/utils.dart';
 
 /// A model for chat messages.
@@ -12,7 +13,8 @@ class ChatMessage {
 class ChatScreen extends StatefulWidget {
   final String sessionTitle; // Title of the session to display in the app bar
    static const String routeName = '/chat-screen';
-  const ChatScreen({Key? key, required this.sessionTitle}):super(key: key);
+   const ChatScreen({super.key, required this.sessionTitle});
+ 
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -23,11 +25,17 @@ class _ChatScreenState extends State<ChatScreen> {
     ChatMessage(sender: "bot", message: "Hello! How can I help you today?"),
   ];
   final TextEditingController _controller = TextEditingController();
-
+ ChatService chatService = ChatService();
   /// Simulates sending a message by the user and a dummy response from the chatbot.
   void _sendMessage() {
     String text = _controller.text.trim();
+    chatService.QueryFile(
+      context: context,
+      question: text,
+      fileId: 3,
+    );
     if (text.isNotEmpty) {
+      
       setState(() {
         _messages.add(ChatMessage(sender: "user", message: text));
         // Simulated bot response for illustration.

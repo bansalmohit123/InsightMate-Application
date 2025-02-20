@@ -39,6 +39,9 @@ dependencies:
   provider:
   http:
   file_picker:
+  mime:
+  http_parser:
+  path:
 
 dev_dependencies:
   flutter_test:

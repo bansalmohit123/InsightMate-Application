@@ -5,13 +5,12 @@ class FileModel {
   final String id;
   final String title;
   final String description;
-  final File file; // Now using actual File object
+  
 
   FileModel({
     required this.id,
     required this.title,
     required this.description,
-    required this.file,
   });
 
   // Convert model to a Map (Cannot store File directly in JSON)
@@ -20,7 +19,6 @@ class FileModel {
       'id': id,
       'title': title,
       'description': description,
-      'file': file.path, // Storing only the file path
     };
   }
 
@@ -30,7 +28,7 @@ class FileModel {
       id: map['id'] ?? '',
       title: map['title'] ?? '',
       description: map['description'] ?? '',
-      file: File(map['file'] ?? ''), // Convert path back to File
+    
     );
   }
 
@@ -45,13 +43,13 @@ class FileModel {
     String? id,
     String? title,
     String? description,
-    File? file,
+    
   }) {
     return FileModel(
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
-      file: file ?? this.file,
+      
     );
   }
 }
