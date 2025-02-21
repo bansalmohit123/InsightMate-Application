@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -111,20 +110,22 @@ class ChatService {
    })async{
       try{
         var response = await http.post(
-          Uri.parse('$uri/api/web/upload'),
+          Uri.parse('$uri/api/url/upload'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, String>{
             'title': title,
             'description': description,
-            'webpageLink': webpageLink,
+            'url': webpageLink,
           }),
         );
-        if(response.statusCode == 200){
-          debugPrint("Upload Successful: ${response.body}");
-          callback(true);
-        }
+        // if(response.statusCode == 200){
+        //   debugPrint("Upload Successful: ${response.body}");
+        //   callback(true);
+        // }
+        print(response.body);
+        callback(true);
       }catch(e){
         debugPrint("Error uploading file: $e");
         ScaffoldMessenger.of(context).showSnackBar(
@@ -142,13 +143,13 @@ class ChatService {
    })async{
       try{
         var response = await http.post(
-          Uri.parse('$uri/api/web/query'),
+          Uri.parse('$uri/api/url/query'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, String>{
             'question': question,
-            'webId': webId,
+            'urlId': webId,
           }),
         );
         if(response.statusCode == 200){
@@ -180,7 +181,7 @@ class ChatService {
           body: jsonEncode(<String, String>{
             'title': title,
             'description': description,
-            'youtubeLink': youtubeLink,
+            'videoUrl': youtubeLink,
           }),
         );
         if(response.statusCode == 200){
@@ -210,7 +211,7 @@ class ChatService {
           },
           body: jsonEncode(<String, String>{
             'question': question,
-            'youtubeId': youtubeId,
+            'videoId': youtubeId,
           }),
         );
         if(response.statusCode == 200){

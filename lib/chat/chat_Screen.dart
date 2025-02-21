@@ -29,10 +29,25 @@ class _ChatScreenState extends State<ChatScreen> {
   /// Simulates sending a message by the user and a dummy response from the chatbot.
   void _sendMessage() {
     String text = _controller.text.trim();
-    chatService.QueryFile(
+    chatService.queryYoutube(
       context: context,
       question: text,
-      fileId: 3,
+      // webId: '8746b8c5-24e6-4da6-9cca-dcb5fd0de880',
+      youtubeId:'c8365ed1-74b5-4d3f-9eb1-e1b3d355bf17',
+      callback: (bool success) {
+        if (success) {
+          print("Query Successful");
+        } else {
+          print("Query Unsuccessful");
+        }
+      },
+      // callback: (String response) {
+      //   setState(() {
+      //     _messages.add(ChatMessage(sender: "user", message: text));
+      //     _messages.add(ChatMessage(sender: "bot", message: response));
+      //   });
+      //   _controller.clear();
+      // },
     );
     if (text.isNotEmpty) {
       

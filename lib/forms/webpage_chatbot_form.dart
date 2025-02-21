@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insightmate/forms/chat_service.dart';
 import 'package:insightmate/utils.dart';
 
 class WebpageChatbotForm extends StatefulWidget {
@@ -13,10 +14,21 @@ class _WebpageChatbotFormState extends State<WebpageChatbotForm> {
   String _title = '';
   String _description = '';
   String _webpageLink = '';
-
+  ChatService chatService = ChatService();
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      chatService.uploadWeb(context: context, 
+      title: _title, 
+      description: _description,
+       webpageLink: _webpageLink,
+        callback: (bool success) {
+          if (success) {
+            print("uploaded Succesfull");
+          } else {
+            print("upload unSuccesfull");
+          }
+        },);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Web Page Chatbot session created')),
       );
