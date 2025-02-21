@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 class FileModel {
-  final String id;
+  final String documentId;
   final String title;
   final String description;
   
 
   FileModel({
-    required this.id,
+    required this.documentId,
     required this.title,
     required this.description,
   });
@@ -16,7 +16,7 @@ class FileModel {
   // Convert model to a Map (Cannot store File directly in JSON)
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'documentId': documentId,
       'title': title,
       'description': description,
     };
@@ -25,7 +25,7 @@ class FileModel {
   // Create model from a Map
   factory FileModel.fromMap(Map<String, dynamic> map) {
     return FileModel(
-      id: map['id'] ?? '',
+      documentId: map['documentId'] ?? '',
       title: map['title'] ?? '',
       description: map['description'] ?? '',
     
@@ -40,16 +40,15 @@ class FileModel {
 
   // Copy method for immutability
   FileModel copyWith({
-    String? id,
+    String? documentId,
     String? title,
     String? description,
     
   }) {
     return FileModel(
-      id: id ?? this.id,
+      documentId: documentId ?? this.documentId,
       title: title ?? this.title,
       description: description ?? this.description,
-      
     );
   }
 }

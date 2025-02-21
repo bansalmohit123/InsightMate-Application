@@ -14,8 +14,6 @@ class ChatScreen extends StatefulWidget {
   final String sessionTitle; // Title of the session to display in the app bar
    static const String routeName = '/chat-screen';
    const ChatScreen({super.key, required this.sessionTitle});
- 
-
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -29,33 +27,23 @@ class _ChatScreenState extends State<ChatScreen> {
   /// Simulates sending a message by the user and a dummy response from the chatbot.
   void _sendMessage() {
     String text = _controller.text.trim();
-    chatService.queryYoutube(
+    chatService.queryWeb(
       context: context,
       question: text,
-      // webId: '8746b8c5-24e6-4da6-9cca-dcb5fd0de880',
-      youtubeId:'c8365ed1-74b5-4d3f-9eb1-e1b3d355bf17',
-      callback: (bool success) {
-        if (success) {
-          print("Query Successful");
-        } else {
-          print("Query Unsuccessful");
-        }
+      webId: 'c3f6fec1-7212-44b8-9f74-b0c843f83a64',
+      // youtubeId:'c8365ed1-74b5-4d3f-9eb1-e1b3d355bf17',
+      // documentId: 'c8365ed1-74b5-4d3f-9eb1-e1b3d355bf17',
+      callback: (String response) {
+        setState(() {
+          _messages.add(ChatMessage(sender: "bot", message: response));
+        });
+        _controller.clear();
       },
-      // callback: (String response) {
-      //   setState(() {
-      //     _messages.add(ChatMessage(sender: "user", message: text));
-      //     _messages.add(ChatMessage(sender: "bot", message: response));
-      //   });
-      //   _controller.clear();
-      // },
     );
     if (text.isNotEmpty) {
       
       setState(() {
         _messages.add(ChatMessage(sender: "user", message: text));
-        // Simulated bot response for illustration.
-        _messages.add(ChatMessage(
-            sender: "bot", message: "This is a response from the chatbot."));
       });
       _controller.clear();
     }

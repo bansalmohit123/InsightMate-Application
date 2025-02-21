@@ -67,11 +67,10 @@ class _DocumentChatbotFormState extends State<DocumentChatbotForm> {
           }
         },
       );
-
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Document Chatbot session created')),
       );
-      Navigator.pop(context);
+       Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

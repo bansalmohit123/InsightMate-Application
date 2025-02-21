@@ -7,20 +7,20 @@ class YoutubeProvider extends ChangeNotifier {
   YoutubeModel? get youtubeModel => _youtubeModel;
 
   // Set file from JSON string
-  void setFile(String fileJson) {
+  void setYoutube(String fileJson) {
     debugPrint(fileJson);
     _youtubeModel = YoutubeModel.fromJson(fileJson);
     notifyListeners();
   }
 
   // Set file from youtubeModel object
-  void setFileFromModel(YoutubeModel youtubeModel) {
+  void setYoutubeFromModel(YoutubeModel youtubeModel) {
     _youtubeModel = youtubeModel;
     notifyListeners();
   }
 
   // Clear the file data
-  void clearFile() {
+  void clearYoutube() {
     _youtubeModel = null;
     notifyListeners();
   }

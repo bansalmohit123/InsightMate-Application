@@ -57,8 +57,8 @@ class _MyAppState extends State<MyApp> {
         hintColor:const  Color(0xFF3FD2C7),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      // home: isUserLoggedIn?const DashboardPage(): const SignUpPage(),
-      home: const DashboardPage(),
+      home: isUserLoggedIn?const DashboardPage(): const SignUpPage(),
+      // home: const DashboardPage(),
       onGenerateRoute: (settings) => generateRoute(settings),
     );
   }

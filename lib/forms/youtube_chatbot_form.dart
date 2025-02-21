@@ -23,7 +23,7 @@ class _YoutubeChatbotFormState extends State<YoutubeChatbotForm> {
         context: context,
         title: _title,
         description: _description,
-        youtubeLink: _youtubeLink,
+        youtubeurl: _youtubeLink,
         callback: (bool success) {
           if (success) {
             print("uploaded Succesfull");

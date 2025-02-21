@@ -32,10 +32,10 @@ class AuthService {
     );
 
     Map<String, dynamic> data = json.decode(response.body);
-    // print(data);
-SharedPreferences prefs = await SharedPreferences.getInstance();
-await prefs.setString('token', data['token']);
-if (!context.mounted) return;
+    print(data);
+// SharedPreferences prefs = await SharedPreferences.getInstance();
+// await prefs.setString('token', data['token']);
+
 final userProvider = Provider.of<UserProvider>(context, listen: false);
 
 userProvider.setUser(response.body);
