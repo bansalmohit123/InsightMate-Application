@@ -101,4 +101,128 @@ class ChatService {
       // }
       
    }
+
+   Future<void> uploadWeb({
+    required BuildContext context,
+    required String title,
+    required String description,
+    required String webpageLink,
+    required void Function(bool success) callback,
+   })async{
+      try{
+        var response = await http.post(
+          Uri.parse('$uri/api/web/upload'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'title': title,
+            'description': description,
+            'webpageLink': webpageLink,
+          }),
+        );
+        if(response.statusCode == 200){
+          debugPrint("Upload Successful: ${response.body}");
+          callback(true);
+        }
+      }catch(e){
+        debugPrint("Error uploading file: $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error uploading file: $e")),
+        );
+        callback(false);
+      }
+   }
+
+   Future<void> queryWeb({
+    required BuildContext context,
+    required String question,
+    required String webId,
+    required void Function(bool success) callback,
+   })async{
+      try{
+        var response = await http.post(
+          Uri.parse('$uri/api/web/query'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'question': question,
+            'webId': webId,
+          }),
+        );
+        if(response.statusCode == 200){
+          debugPrint("Upload Successful: ${response.body}");
+          callback(true);
+        }
+      }catch(e){
+        debugPrint("Error uploading file: $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error uploading file: $e")),
+        );
+        callback(false);
+      }
+   }
+
+   Future<void> uploadYoutube({
+    required BuildContext context,
+    required String title,
+    required String description,
+    required String youtubeLink,
+    required void Function(bool success) callback,
+   })async{
+      try{
+        var response = await http.post(
+          Uri.parse('$uri/api/youtube/upload'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'title': title,
+            'description': description,
+            'youtubeLink': youtubeLink,
+          }),
+        );
+        if(response.statusCode == 200){
+          debugPrint("Upload Successful: ${response.body}");
+          callback(true);
+        }
+      }catch(e){
+        debugPrint("Error uploading file: $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error uploading file: $e")),
+        );
+        callback(false);
+      }
+   }
+
+   Future<void> queryYoutube({
+    required BuildContext context,
+    required String question,
+    required String youtubeId,
+    required void Function(bool success) callback,
+   })async{
+      try{
+        var response = await http.post(
+          Uri.parse('$uri/api/youtube/query'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'question': question,
+            'youtubeId': youtubeId,
+          }),
+        );
+        if(response.statusCode == 200){
+          debugPrint("Upload Successful: ${response.body}");
+          callback(true);
+        }
+      }catch(e){
+        debugPrint("Error uploading file: $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error uploading file: $e")),
+        );
+        callback(false);
+      }
+   }
 }
