@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     bool isUserLoggedIn =
-        Provider.of<UserProvider>(context).user.token.isNotEmpty;
+        Provider.of<UserProvider>(context).user.token.isNotEmpty;  
     return MaterialApp(
       title: 'Responsive Flutter Web App',
       debugShowCheckedModeBanner: false,

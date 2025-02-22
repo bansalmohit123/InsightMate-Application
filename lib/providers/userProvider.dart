@@ -13,9 +13,6 @@ class UserProvider extends ChangeNotifier {
   User get user => _user;
 
   void setUser(String user) {
-    // Use a logging framework instead of print
- 
-    debugPrint(user);
     _user = User.fromJson(user);
     notifyListeners();
   }

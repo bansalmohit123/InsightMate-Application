@@ -27,15 +27,16 @@ class _YoutubeChatbotFormState extends State<YoutubeChatbotForm> {
         callback: (bool success) {
           if (success) {
             print("uploaded Succesfull");
+              ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('YouTube Chatbot session created')),
+      );
+        Navigator.pop(context);
           } else {
             print("upload unSuccesfull");
           }
         },
       );
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('YouTube Chatbot session created')),
-      );
-      Navigator.pop(context);
+    
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

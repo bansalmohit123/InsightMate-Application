@@ -120,6 +120,7 @@ class ChatService {
     required void Function(bool success) callback,
    })async{
       try{
+          UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
         var response = await http.post(
           Uri.parse('$uri/api/url/upload'),
           headers: <String, String>{
@@ -129,6 +130,7 @@ class ChatService {
             'title': title,
             'description': description,
             'url': webpageLink,
+            'userId': userProvider.user.id,
           }),
         );
         if(response.statusCode == 200){
@@ -188,6 +190,7 @@ class ChatService {
     required void Function(bool success) callback,
    })async{
       try{
+          UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
         var response = await http.post(
           Uri.parse('$uri/api/youtube/upload'),
           headers: <String, String>{
@@ -197,6 +200,7 @@ class ChatService {
             'title': title,
             'description': description,
             'videoUrl': youtubeurl,
+            'userId': userProvider.user.id,
           }),
         );
         if(response.statusCode == 200){

@@ -95,7 +95,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           onPressed: () async{
                            
                             bool result = await Signup();
-                            print(result);
+                          
                             if (result) {
                               Navigator.pushNamed(context, '/signin-screen');
                             

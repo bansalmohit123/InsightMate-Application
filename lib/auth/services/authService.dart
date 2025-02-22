@@ -33,14 +33,14 @@ class AuthService {
 
     Map<String, dynamic> data = json.decode(response.body);
     print(data);
-// SharedPreferences prefs = await SharedPreferences.getInstance();
-// await prefs.setString('token', data['token']);
+SharedPreferences prefs = await SharedPreferences.getInstance();
+await prefs.setString('token', data['token']);
 
 final userProvider = Provider.of<UserProvider>(context, listen: false);
 
 userProvider.setUser(response.body);
 
-// print(userProvider.user.token);
+print(userProvider.user.token);
 callback(true);
   }
 
@@ -61,7 +61,7 @@ callback(true);
       email: email,
       token: '',
     );
-    print(user.toJson());
+    // print(user.toJson());
     final response = await http.post(
       Uri.parse('$uri/api/auth/signup'),
       headers: <String, String>{
@@ -98,7 +98,6 @@ callback(true);
       );
 
       var response = jsonDecode(tokenRes.body);
-      print(response);
       if (response == true) {
         http.Response userRes = await http.get(
           Uri.parse('$uri/api/auth/'),

@@ -22,32 +22,32 @@ class _DocumentChatbotFormState extends State<DocumentChatbotForm> {
   ChatService chatService = ChatService();
 
   Future<void> _pickFile() async {
-  try {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf', 'doc', 'docx', 'txt', 'csv'],
-      withData: true, // Ensures file bytes are available for Web
-    );
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'docx', 'txt', 'csv'],
+        withData: true, // Ensures file bytes are available for Web
+      );
 
-    if (result != null) {
-      setState(() {
-        _fileName = result.files.single.name; // Store file name
+      if (result != null) {
+        setState(() {
+          _fileName = result.files.single.name; // Store file name
 
-        if (kIsWeb) {
-          // 🌐 Web: Store bytes
-          _selectedFile = result.files.single.bytes;
-        } else {
-          // 📱 Mobile/Desktop: Store File object
-          _selectedFile = File(result.files.single.path!);
-        }
-      });
+          if (kIsWeb) {
+            // 🌐 Web: Store bytes
+            _selectedFile = result.files.single.bytes;
+          } else {
+            // 📱 Mobile/Desktop: Store File object
+            _selectedFile = File(result.files.single.path!);
+          }
+        });
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error selecting file: $e")),
+      );
     }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Error selecting file: $e")),
-    );
   }
-}
 
   void _submitForm() {
     if (_formKey.currentState!.validate() && _selectedFile != null) {
@@ -58,19 +58,19 @@ class _DocumentChatbotFormState extends State<DocumentChatbotForm> {
         title: _title,
         description: _description,
         file: _selectedFile!,
-        fileName: _fileName?? "uploaded_file",
+        fileName: _fileName ?? "uploaded_file",
         callback: (bool success) {
           if (success) {
             print("uploaded Succesfull");
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Document Chatbot session created')),
+            );
+            Navigator.pop(context);
           } else {
             print("upload unSuccesfull");
           }
         },
       );
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Document Chatbot session created')),
-      );
-       Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -78,18 +78,18 @@ class _DocumentChatbotFormState extends State<DocumentChatbotForm> {
       );
     }
   }
+
   String _getFileName() {
-  if (_selectedFile == null) return 'No file selected';
+    if (_selectedFile == null) return 'No file selected';
 
-  if (kIsWeb) {
-    // Web: Use filePicker result (Uint8List does not have path, so set default name)
-    return "Uploaded File"; 
-  } else {
-    // Mobile/Desktop: Extract file name from path
-    return _selectedFile!.path.split('/').last;
+    if (kIsWeb) {
+      // Web: Use filePicker result (Uint8List does not have path, so set default name)
+      return "Uploaded File";
+    } else {
+      // Mobile/Desktop: Extract file name from path
+      return _selectedFile!.path.split('/').last;
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {

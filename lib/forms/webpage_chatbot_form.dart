@@ -25,14 +25,14 @@ class _WebpageChatbotFormState extends State<WebpageChatbotForm> {
         callback: (bool success) {
           if (success) {
             print("uploaded Succesfull");
+             ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Web Page Chatbot session created')),
+      );
+        Navigator.pop(context);
           } else {
             print("upload unSuccesfull");
           }
         },);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Web Page Chatbot session created')),
-      );
-      Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill all fields and Provide a Valid Webpage Link')),
