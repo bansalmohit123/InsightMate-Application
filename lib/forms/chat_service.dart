@@ -12,7 +12,8 @@ import 'package:insightmate/providers/youtube.dart';
 import 'package:path/path.dart' as path;
 import 'package:insightmate/global_variable.dart';
 import 'package:mime/mime.dart';
-import 'package:provider/provider.dart'; // 👈 Import this for MIME type detection
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // 👈 Import this for MIME type detection
 
 
 class ChatService {
@@ -26,7 +27,8 @@ class ChatService {
   }) async {
     try {
        String fileExtension = path.extension(fileName); // Example: ".pdf"
-       print(fileExtension);
+       SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
       var request = http.MultipartRequest('POST', Uri.parse('$uri/api/document/upload'));
       
       String? mimeType = lookupMimeType(fileName); // Detect MIME type dynamically
@@ -60,6 +62,9 @@ class ChatService {
       request.fields['title'] = title;
       request.fields['description'] = description;
 
+      // Add header token
+      request.headers['token'] = token!;
+
       // Send request
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
@@ -87,6 +92,8 @@ class ChatService {
       required String documentId,
       required void Function(String success) callback,
    }) async {
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
       final response = await http.post(
         Uri.parse('$uri/api/document/query'),
         headers: <String, String>{
@@ -95,6 +102,7 @@ class ChatService {
         body: jsonEncode(<String, dynamic>{
           'question': question,
           'documentId': documentId,
+          'token': token,
         }),
       );
       
@@ -120,11 +128,14 @@ class ChatService {
     required void Function(bool success) callback,
    })async{
       try{
+         SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
           UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
         var response = await http.post(
           Uri.parse('$uri/api/url/upload'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
+            'token': token!,
           },
           body: jsonEncode(<String, String>{
             'title': title,
@@ -157,10 +168,13 @@ class ChatService {
     required void Function(String success) callback,
    })async{
       try{
+         SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
         var response = await http.post(
           Uri.parse('$uri/api/url/query'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
+            'token': token!,
           },
           body: jsonEncode(<String, String>{
             'question': question,
@@ -190,11 +204,14 @@ class ChatService {
     required void Function(bool success) callback,
    })async{
       try{
+         SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
           UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
         var response = await http.post(
           Uri.parse('$uri/api/youtube/upload'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
+            'token': token!,
           },
           body: jsonEncode(<String, String>{
             'title': title,
@@ -225,10 +242,13 @@ class ChatService {
     required void Function(String success) callback,
    })async{
       try{
+         SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
         var response = await http.post(
           Uri.parse('$uri/api/youtube/query'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
+            'token': token!,
           },
           body: jsonEncode(<String, String>{
             'question': question,

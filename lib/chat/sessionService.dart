@@ -12,7 +12,8 @@ import 'package:insightmate/providers/youtube.dart';
 import 'package:path/path.dart' as path;
 import 'package:insightmate/global_variable.dart';
 import 'package:mime/mime.dart';
-import 'package:provider/provider.dart'; // 👈 Import this for MIME type detection
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // 👈 Import this for MIME type detection
 
 
 
@@ -27,7 +28,8 @@ class Sessionservice {
       UserProvider userProvider =
           Provider.of<UserProvider>(context, listen: false);
       var userId = userProvider.user.id;
-
+       SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
       final response = await http.post(
         Uri.parse('$uri/api/get/getoption'),
         headers: <String, String>{
@@ -36,6 +38,7 @@ class Sessionservice {
         body: jsonEncode(<String, dynamic>{
           'option': option,
           'userId': userId,
+          'token': token,
         }),
       );
 
