@@ -14,7 +14,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(builder: (context) => const DashboardPage());  
     case ChatScreen.routeName:
       final args = routeSettings.arguments as Map<String, dynamic>;
-      return MaterialPageRoute(builder: (context) => ChatScreen(sessionTitle: args['sessionTitle']));  
+      return MaterialPageRoute(builder: (context) => ChatScreen(sessionTitle: args['sessionTitle'],id: args['id'],option: args['option'],));  
     default :
       return MaterialPageRoute(builder: (context) => const Scaffold(
         body: Center(

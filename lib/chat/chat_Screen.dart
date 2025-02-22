@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insightmate/forms/chat_service.dart';
+import 'package:insightmate/providers/web.dart';
 import 'package:insightmate/utils.dart';
 
 /// A model for chat messages.
@@ -12,8 +13,10 @@ class ChatMessage {
 /// A responsive chat screen where users can interact with the chatbot.
 class ChatScreen extends StatefulWidget {
   final String sessionTitle; // Title of the session to display in the app bar
+  final String id; // ID of the session to fetch messages from
+  final String option; // Type of chatbot session
    static const String routeName = '/chat-screen';
-   const ChatScreen({super.key, required this.sessionTitle});
+   const ChatScreen({super.key, required this.sessionTitle,required this.id , required this.option});
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -24,15 +27,27 @@ class _ChatScreenState extends State<ChatScreen> {
   ];
   final TextEditingController _controller = TextEditingController();
  ChatService chatService = ChatService();
+ @override
+  void initState() {
+    super.initState();
+   
+    print(widget.id);
+    print(widget.option); 
+   
+    
+  }
+
   /// Simulates sending a message by the user and a dummy response from the chatbot.
   void _sendMessage() {
     String text = _controller.text.trim();
-    chatService.queryWeb(
+
+    if(widget.option=='Document Chatbot'){
+       chatService.QueryFile(
       context: context,
       question: text,
-      webId: 'c3f6fec1-7212-44b8-9f74-b0c843f83a64',
+      // webId: widget.id,
       // youtubeId:'c8365ed1-74b5-4d3f-9eb1-e1b3d355bf17',
-      // documentId: 'c8365ed1-74b5-4d3f-9eb1-e1b3d355bf17',
+      documentId: widget.id,
       callback: (String response) {
         setState(() {
           _messages.add(ChatMessage(sender: "bot", message: response));
@@ -40,6 +55,35 @@ class _ChatScreenState extends State<ChatScreen> {
         _controller.clear();
       },
     );
+    }
+    else if(widget.option=='Webpage Extraction Chatbot'){
+      chatService.queryWeb(
+      context: context,
+      question: text,
+      webId: widget.id,
+      callback : (String response) {
+        setState(() {
+          _messages.add(ChatMessage(sender: "bot", message: response));
+        });
+        _controller.clear();
+      },
+    );
+    }
+    else{
+      chatService.queryYoutube(
+      context: context,
+      question: text,
+      youtubeId: widget.id,
+      callback : (String response) {
+        setState(() {
+          _messages.add(ChatMessage(sender: "bot", message: response));
+        });
+        _controller.clear();
+      },
+    );
+    }
+   
+   
     if (text.isNotEmpty) {
       
       setState(() {

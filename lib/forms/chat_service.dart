@@ -84,7 +84,7 @@ class ChatService {
    Future<void> QueryFile({
       required BuildContext context,
       required String question,
-      required int fileId,
+      required String documentId,
       required void Function(String success) callback,
    }) async {
       final response = await http.post(
@@ -94,7 +94,7 @@ class ChatService {
         },
         body: jsonEncode(<String, dynamic>{
           'question': question,
-          'documentId': fileId,
+          'documentId': documentId,
         }),
       );
       

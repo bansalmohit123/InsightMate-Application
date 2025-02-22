@@ -232,7 +232,7 @@ class _ChatbotDetailPageState extends State<ChatbotDetailPage> {
                                       MaterialPageRoute(
                                         builder: (context) => ChatScreen(
                                             sessionTitle:
-                                                session["title"] ?? "Untitled"),
+                                                session["title"] ?? "Untitled",id:session["id"],option:widget.option),
                                       ),
                                     );
                                   },

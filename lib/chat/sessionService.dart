@@ -43,11 +43,12 @@ class Sessionservice {
         List<dynamic> jsonResponse = json.decode(response.body);
         debugPrint("Query Successful: $jsonResponse");
 
-        // Convert API response to List of Map<String, String>
+       
         List<Map<String, dynamic>> sessions = jsonResponse.map((item) {
           return {
             "title": item["title"] ?? "No Title",
             "description": item["description"] ?? "No Description",
+            "id": item["id"] ?? "No ID",
           };
         }).toList();
 
