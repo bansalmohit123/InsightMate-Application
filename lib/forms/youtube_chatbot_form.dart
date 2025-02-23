@@ -25,14 +25,14 @@ class _YoutubeChatbotFormState extends State<YoutubeChatbotForm> {
         title: _title,
         description: _description,
         youtubeurl: _youtubeLink,
-        callback: (bool success) {
+        callback: (bool success,String sessionID,String fileID) {
           if (success) {
             print("uploaded Succesfull");
             Map<String, dynamic> newSession = {
-              "id": DateTime.now().millisecondsSinceEpoch.toString(),
+              "id": fileID,
               "title": _title,
               "description": _description,
-              "sessionID": "session_${DateTime.now().millisecondsSinceEpoch}",
+              "sessionID": sessionID,
             };
             print(newSession);
 

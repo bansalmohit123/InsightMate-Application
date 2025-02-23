@@ -23,7 +23,7 @@ class ChatService {
     required String description,
     required dynamic file, // Can be File (Mobile) or Uint8List (Web)
     required String fileName, // Pass filename separately
-    required void Function(bool success) callback,
+    required void Function(bool success,String sessionID,String fileID) callback,
   }) async {
     try {
        String fileExtension = path.extension(fileName); // Example: ".pdf"
@@ -71,19 +71,22 @@ class ChatService {
 
       if (response.statusCode == 200) {
         debugPrint("Upload Successful: ${response.body}");
+        Map<String, dynamic> responseBody = jsonDecode(response.body);
+          String sessionID = responseBody['sessionID'];
+          String fileID = responseBody['documentId'];
         FileProvider fileProvider = Provider.of<FileProvider>(context, listen: false);
         fileProvider.setFile(response.body);
-        callback(true);
+        callback(true,sessionID,fileID);
       } else {
         debugPrint("Upload Failed: ${response.body}");
-        callback(false);
+        callback(false,"","");
       }
     } catch (e) {
       debugPrint("Error uploading file: $e");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Error uploading file: $e")),
       );
-      callback(false);
+      callback(false,"","");
     }
   }
    Future<void> QueryFile({
@@ -98,11 +101,11 @@ class ChatService {
         Uri.parse('$uri/api/document/query'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          'token': token!,
         },
         body: jsonEncode(<String, dynamic>{
           'question': question,
           'documentId': documentId,
-          'token': token,
         }),
       );
       
@@ -125,7 +128,7 @@ class ChatService {
     required String title,
     required String description,
     required String webpageLink,
-    required void Function(bool success) callback,
+    required void Function(bool success,String sessionI,String fileID) callback,
    })async{
       try{
          SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -145,10 +148,13 @@ class ChatService {
           }),
         );
         if(response.statusCode == 200){
+          Map<String, dynamic> responseBody = jsonDecode(response.body);
+          String sessionID = responseBody['sessionID'];
+          String fileID = responseBody['id'];
           debugPrint("Upload Successful: ${response.body}");
           WebProvider webProvider = Provider.of<WebProvider>(context, listen: false);
           webProvider.setWeb(response.body);
-          callback(true);
+          callback(true,sessionID,fileID);
         }
         
         
@@ -157,7 +163,7 @@ class ChatService {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Error uploading file: $e")),
         );
-        callback(false);
+        callback(false,"","");
       }
    }
 
@@ -201,7 +207,7 @@ class ChatService {
     required String title,
     required String description,
     required String youtubeurl,
-    required void Function(bool success) callback,
+    required void Function(bool success,String sessionID,String fileID) callback,
    })async{
       try{
          SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -222,16 +228,19 @@ class ChatService {
         );
         if(response.statusCode == 200){
           debugPrint("Upload Successful: ${response.body}");
+          Map<String, dynamic> responseBody = jsonDecode(response.body);
+          String sessionID = responseBody['sessionID'];
+          String fileID = responseBody['id'];
           YoutubeProvider youtubeProvider = Provider.of<YoutubeProvider>(context, listen: false);
           youtubeProvider.setYoutube(response.body);
-          callback(true);
+          callback(true,sessionID,fileID);
         }
       }catch(e){
         debugPrint("Error uploading file: $e");
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Error uploading file: $e")),
         );
-        callback(false);
+        callback(false,"","");
       }
    }
 
@@ -278,6 +287,7 @@ class ChatService {
 
       if (response.statusCode == 200) {
         List<dynamic> jsonResponse = json.decode(response.body);
+        print(jsonResponse);
         return jsonResponse.map((item) {
           return {
             "sender": item["sender"],

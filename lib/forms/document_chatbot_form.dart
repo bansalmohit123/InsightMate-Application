@@ -212,16 +212,16 @@ class _DocumentChatbotFormState extends State<DocumentChatbotForm> {
         description: _description,
         file: _selectedFile!,
         fileName: _fileName.isNotEmpty ? _fileName : "uploaded_file", // ✅ Fixes default file name
-        callback: (bool success) {
+        callback: (bool success,String sessionID,String fileID) {
           if (success) {
             print("Upload Successful");
 
             // ✅ Send new session details back to update UI in real-time
             Map<String, dynamic> newSession = {
-              "id": DateTime.now().millisecondsSinceEpoch.toString(),
+              "id": fileID,
               "title": _title,
               "description": _description,
-              "sessionID": "session_${DateTime.now().millisecondsSinceEpoch}",
+              "sessionID": sessionID,
             };
 
             widget.onSessionCreated(newSession); // ✅ Update session list

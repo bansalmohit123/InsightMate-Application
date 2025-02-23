@@ -23,15 +23,15 @@ class _WebpageChatbotFormState extends State<WebpageChatbotForm> {
       title: _title, 
       description: _description,
        webpageLink: _webpageLink,
-        callback: (bool success) {
+        callback: (bool success,String SessionID ,String fileID) {
           if (success) {
             print("uploaded Succesfull");
 
              Map<String, dynamic> newSession = {
-              "id": DateTime.now().millisecondsSinceEpoch.toString(),
+              "id": fileID,
               "title": _title,
               "description": _description,
-              "sessionID": "session_${DateTime.now().millisecondsSinceEpoch}",
+              "sessionID": SessionID,
             };
 
             widget.onSessionCreated(newSession); // ✅ Update session list
