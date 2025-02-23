@@ -1,96 +1,140 @@
 import 'package:flutter/material.dart';
 import 'package:insightmate/forms/chat_service.dart';
-import 'package:insightmate/providers/web.dart';
 import 'package:insightmate/utils.dart';
 
 /// A model for chat messages.
 class ChatMessage {
   final String sender;
   final String message;
+
   ChatMessage({required this.sender, required this.message});
 }
 
 /// A responsive chat screen where users can interact with the chatbot.
 class ChatScreen extends StatefulWidget {
   final String sessionTitle; // Title of the session to display in the app bar
-  final String id; // ID of the session to fetch messages from
+  final String id; // ID of the chatbot session
   final String option; // Type of chatbot session
-   static const String routeName = '/chat-screen';
-   const ChatScreen({super.key, required this.sessionTitle,required this.id , required this.option});
+  final String sessionID; // ID for tracking chat history
+
+  static const String routeName = '/chat-screen';
+
+  const ChatScreen({
+    super.key,
+    required this.sessionTitle,
+    required this.id,
+    required this.option,
+    required this.sessionID,
+  });
+
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final List<ChatMessage> _messages = [
-    ChatMessage(sender: "bot", message: "Hello! How can I help you today?"),
-  ];
+  List<ChatMessage> _messages = [];
   final TextEditingController _controller = TextEditingController();
- ChatService chatService = ChatService();
- @override
+  final ChatService _chatService = ChatService();
+  bool _isLoading = true;
+
+  @override
   void initState() {
     super.initState();
-   
     print(widget.id);
-    print(widget.option); 
-   
-    
+    print(widget.option);
+    print(widget.sessionID);
+    _loadChatHistory();
   }
 
-  /// Simulates sending a message by the user and a dummy response from the chatbot.
-  void _sendMessage() {
-    String text = _controller.text.trim();
+  /// Loads previous messages from the database.
+  Future<void> _loadChatHistory() async {
+    List<Map<String, dynamic>> chatHistory = await _chatService.getMessages(widget.sessionID);
 
-    if(widget.option=='Document Chatbot'){
-       chatService.QueryFile(
+    setState(() {
+      _messages = chatHistory.map((msg) {
+        return ChatMessage(sender: msg["sender"], message: msg["message"]);
+      }).toList();
+      _isLoading = false;
+    });
+  }
+
+  /// Sends a message and saves it in the database.
+  void _sendMessage() async {
+    String text = _controller.text.trim();
+    if (text.isEmpty) return;
+
+    // Add user's message to UI & save in DB
+    setState(() {
+      _messages.add(ChatMessage(sender: "user", message: text));
+    });
+
+    await _chatService.sendMessage(
+      sessionId: widget.sessionID,
+      sender: "user",
+      message: text,
+    );
+
+    _controller.clear();
+
+    // Call chatbot based on type
+    if (widget.option == 'Document Chatbot') {
+      _queryDocumentChatbot(text);
+    } else if (widget.option == 'Webpage Extraction Chatbot') {
+      _queryWebChatbot(text);
+    } else {
+      _queryYouTubeChatbot(text);
+    }
+  }
+
+  /// Queries Document Chatbot and saves bot's response.
+  void _queryDocumentChatbot(String text) {
+    _chatService.QueryFile(
       context: context,
       question: text,
-      // webId: widget.id,
-      // youtubeId:'c8365ed1-74b5-4d3f-9eb1-e1b3d355bf17',
       documentId: widget.id,
-      callback: (String response) {
-        setState(() {
-          _messages.add(ChatMessage(sender: "bot", message: response));
-        });
-        _controller.clear();
+      callback: (String response) async {
+        _addBotMessage(response);
       },
     );
-    }
-    else if(widget.option=='Webpage Extraction Chatbot'){
-      chatService.queryWeb(
+  }
+
+  /// Queries Webpage Chatbot and saves bot's response.
+  void _queryWebChatbot(String text) {
+    _chatService.queryWeb(
       context: context,
       question: text,
       webId: widget.id,
-      callback : (String response) {
-        setState(() {
-          _messages.add(ChatMessage(sender: "bot", message: response));
-        });
-        _controller.clear();
+      callback: (String response) async {
+        _addBotMessage(response);
       },
     );
-    }
-    else{
-      chatService.queryYoutube(
+  }
+
+  /// Queries YouTube Chatbot and saves bot's response.
+  void _queryYouTubeChatbot(String text) {
+    _chatService.queryYoutube(
       context: context,
       question: text,
       youtubeId: widget.id,
-      callback : (String response) {
-        setState(() {
-          _messages.add(ChatMessage(sender: "bot", message: response));
-        });
-        _controller.clear();
+      callback: (String response) async {
+        _addBotMessage(response);
       },
     );
-    }
-   
-   
-    if (text.isNotEmpty) {
-      
+  }
+
+  /// Adds a bot response message to UI & saves in DB.
+  void _addBotMessage(String response) async {
+    Future.delayed(const Duration(seconds: 1), () {
       setState(() {
-        _messages.add(ChatMessage(sender: "user", message: text));
+        _messages.add(ChatMessage(sender: "bot", message: response));
       });
-      _controller.clear();
-    }
+
+      _chatService.sendMessage(
+        sessionId: widget.sessionID,
+        sender: "bot",
+        message: response,
+      );
+    });
   }
 
   @override
@@ -103,8 +147,8 @@ class _ChatScreenState extends State<ChatScreen> {
       body: GradientBackground(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            // Limit the width of the chat container on large screens (web) to keep it readable.
             double maxWidth = constraints.maxWidth < 800 ? constraints.maxWidth : 600;
+
             return Center(
               child: Container(
                 width: maxWidth,
@@ -112,35 +156,35 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     // Chat messages list
                     Expanded(
-                      child: ListView.builder(
-                        padding: const EdgeInsets.all(8.0),
-                        itemCount: _messages.length,
-                        itemBuilder: (context, index) {
-                          ChatMessage msg = _messages[index];
-                          bool isUser = msg.sender == "user";
-                          return Align(
-                            alignment:
-                                isUser ? Alignment.centerRight : Alignment.centerLeft,
-                            child: Container(
-                              padding: const EdgeInsets.all(12),
-                              margin: const EdgeInsets.symmetric(vertical: 4),
-                              constraints: BoxConstraints(maxWidth: maxWidth * 0.8),
-                              decoration: BoxDecoration(
-                                color: isUser
-                                    ? color1.withOpacity(0.7)
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Text(
-                                msg.message,
-                                style: TextStyle(
-                                  color: isUser ? Colors.white : Colors.black87,
-                                ),
-                              ),
+                      child: _isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(8.0),
+                              itemCount: _messages.length,
+                              itemBuilder: (context, index) {
+                                ChatMessage msg = _messages[index];
+                                bool isUser = msg.sender == "user";
+
+                                return Align(
+                                  alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(12),
+                                    margin: const EdgeInsets.symmetric(vertical: 4),
+                                    constraints: BoxConstraints(maxWidth: maxWidth * 0.8),
+                                    decoration: BoxDecoration(
+                                      color: isUser ? color1.withOpacity(0.7) : Colors.white,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Text(
+                                      msg.message,
+                                      style: TextStyle(
+                                        color: isUser ? Colors.white : Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
                     ),
                     // Message input field and send button
                     Container(
@@ -163,10 +207,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           IconButton(
                             icon: Icon(Icons.send, color: color3),
                             onPressed: _sendMessage,
-                          )
+                          ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

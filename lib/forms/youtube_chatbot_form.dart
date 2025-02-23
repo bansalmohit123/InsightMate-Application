@@ -3,7 +3,8 @@ import 'package:insightmate/forms/chat_service.dart';
 import 'package:insightmate/utils.dart';
 
 class YoutubeChatbotForm extends StatefulWidget {
-  const YoutubeChatbotForm({super.key});
+    final Function(Map<String, dynamic>) onSessionCreated; // ✅ Callback for real-time update
+  const YoutubeChatbotForm({super.key, required this.onSessionCreated});
 
   @override
   State<YoutubeChatbotForm> createState() => _YoutubeChatbotFormState();
@@ -27,6 +28,15 @@ class _YoutubeChatbotFormState extends State<YoutubeChatbotForm> {
         callback: (bool success) {
           if (success) {
             print("uploaded Succesfull");
+            Map<String, dynamic> newSession = {
+              "id": DateTime.now().millisecondsSinceEpoch.toString(),
+              "title": _title,
+              "description": _description,
+              "sessionID": "session_${DateTime.now().millisecondsSinceEpoch}",
+            };
+            print(newSession);
+
+            widget.onSessionCreated(newSession); // ✅ Update session list
               ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('YouTube Chatbot session created')),
       );

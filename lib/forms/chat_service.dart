@@ -270,4 +270,56 @@ class ChatService {
         callback("false");
       }
    }
+
+
+   Future<List<Map<String, dynamic>>> getMessages(String sessionId) async {
+    try {
+      final response = await http.get(Uri.parse('$uri/api/chat/get/$sessionId'));
+
+      if (response.statusCode == 200) {
+        List<dynamic> jsonResponse = json.decode(response.body);
+        return jsonResponse.map((item) {
+          return {
+            "sender": item["sender"],
+            "message": item["message"],
+            "timestamp": item["timestamp"],
+          };
+        }).toList();
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
+    }
+  }
+
+  // ✅ Save chat messages (User + Bot)
+  Future<void> sendMessage({
+    required String sessionId,
+    required String sender,
+    required String message,
+  }) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
+      final response = await http.post(
+        Uri.parse('$uri/api/chat/save'),
+        headers: {
+          "Content-Type": "application/json",
+            "token": token!
+        },
+        body: jsonEncode({
+          "sessionId": sessionId,
+          "sender": sender,
+          "message": message,
+        }),
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception("Message failed to send.");
+      }
+    } catch (e) {
+      debugPrint("Error sending message: $e");
+    }
+  }
 }

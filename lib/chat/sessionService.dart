@@ -34,14 +34,14 @@ class Sessionservice {
         Uri.parse('$uri/api/get/getoption'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          'token': token!,
         },
         body: jsonEncode(<String, dynamic>{
           'option': option,
           'userId': userId,
-          'token': token,
         }),
       );
-
+      
       if (response.statusCode == 200) {
         List<dynamic> jsonResponse = json.decode(response.body);
         debugPrint("Query Successful: $jsonResponse");
@@ -52,6 +52,7 @@ class Sessionservice {
             "title": item["title"] ?? "No Title",
             "description": item["description"] ?? "No Description",
             "id": item["id"] ?? "No ID",
+            "sessionID": item["sessionID"] ?? "No Session ID",
           };
         }).toList();
 

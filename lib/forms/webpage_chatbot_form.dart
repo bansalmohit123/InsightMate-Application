@@ -3,7 +3,8 @@ import 'package:insightmate/forms/chat_service.dart';
 import 'package:insightmate/utils.dart';
 
 class WebpageChatbotForm extends StatefulWidget {
-  const WebpageChatbotForm({super.key});
+    final Function(Map<String, dynamic>) onSessionCreated; // ✅ Callback for real-time update
+  const WebpageChatbotForm({super.key, required this.onSessionCreated});
 
   @override
   State<WebpageChatbotForm> createState() => _WebpageChatbotFormState();
@@ -25,6 +26,15 @@ class _WebpageChatbotFormState extends State<WebpageChatbotForm> {
         callback: (bool success) {
           if (success) {
             print("uploaded Succesfull");
+
+             Map<String, dynamic> newSession = {
+              "id": DateTime.now().millisecondsSinceEpoch.toString(),
+              "title": _title,
+              "description": _description,
+              "sessionID": "session_${DateTime.now().millisecondsSinceEpoch}",
+            };
+
+            widget.onSessionCreated(newSession); // ✅ Update session list
              ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Web Page Chatbot session created')),
       );

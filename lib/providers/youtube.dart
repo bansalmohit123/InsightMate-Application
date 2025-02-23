@@ -8,7 +8,6 @@ class YoutubeProvider extends ChangeNotifier {
 
   // Set file from JSON string
   void setYoutube(String fileJson) {
-    debugPrint(fileJson);
     _youtubeModel = YoutubeModel.fromJson(fileJson);
     notifyListeners();
   }
