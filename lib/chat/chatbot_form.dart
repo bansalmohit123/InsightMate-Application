@@ -77,6 +77,7 @@ class _ChatbotDetailPageState extends State<ChatbotDetailPage> {
         backgroundColor: color3,
       ),
       body: GradientBackground(
+        showChatbot: true, 
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

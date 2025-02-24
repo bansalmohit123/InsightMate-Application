@@ -574,6 +574,7 @@ class _DashboardPageState extends State<DashboardPage> {
         backgroundColor: color3,
       ),
       body: GradientBackground(
+        showChatbot: true, 
         child: LayoutBuilder(
           builder: (context, constraints) {
             int crossAxisCount;
