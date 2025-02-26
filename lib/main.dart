@@ -58,7 +58,7 @@ class _MyAppState extends State<MyApp> {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: isUserLoggedIn?const DashboardPage(): const SignUpPage(),
-      // home: const DashboardPage(),
+      // home: const SignUpPage(),
       onGenerateRoute: (settings) => generateRoute(settings),
     );
   }

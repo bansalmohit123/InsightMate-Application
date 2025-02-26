@@ -50,7 +50,7 @@ class _DashboardPageState extends State<DashboardPage> {
       appBar: AppBar(
         elevation: 3,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [color1, color3],
               begin: Alignment.topLeft,
