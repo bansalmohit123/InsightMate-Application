@@ -54,6 +54,10 @@ class _WebpageChatbotFormState extends State<WebpageChatbotForm> {
             );
             Navigator.pop(context);
           } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Add a valid webpage link')),
+            );
+              Navigator.pop(context);
             print("Upload Unsuccessful");
           }
         },

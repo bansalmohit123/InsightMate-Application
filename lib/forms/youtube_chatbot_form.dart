@@ -56,6 +56,10 @@ class _YoutubeChatbotFormState extends State<YoutubeChatbotForm> {
             );
             Navigator.pop(context);
           } else {
+             ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Add a valid Youtube link with Transcript')),
+            );
+              Navigator.pop(context);
             print("Upload Unsuccessful");
           }
         },
@@ -72,14 +76,17 @@ class _YoutubeChatbotFormState extends State<YoutubeChatbotForm> {
   @override
   Widget build(BuildContext context) {
     return Card(
+
       elevation: 8,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
+        
         padding: const EdgeInsets.all(16.0),
         child: IntrinsicHeight(
           child: Form(
             key: _formKey,
             child: Column(
+              
               mainAxisSize: MainAxisSize.min,
               children: [
                 // Title field

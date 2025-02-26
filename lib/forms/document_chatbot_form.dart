@@ -89,6 +89,11 @@ class _DocumentChatbotFormState extends State<DocumentChatbotForm> {
           widget.onSessionCreated(newSession);
           Navigator.pop(context, newSession);
         } else {
+          
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Upload failed. Please try again or upload a valid format file.')),
+          );
+          Navigator.pop(context);
           print("Upload Unsuccessful");
         }
       },
