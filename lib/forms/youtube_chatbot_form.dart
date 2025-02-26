@@ -3,7 +3,7 @@ import 'package:insightmate/forms/chat_service.dart';
 import 'package:insightmate/utils.dart';
 
 class YoutubeChatbotForm extends StatefulWidget {
-    final Function(Map<String, dynamic>) onSessionCreated; // ✅ Callback for real-time update
+  final Function(Map<String, dynamic>) onSessionCreated; // Callback for real-time update
   const YoutubeChatbotForm({super.key, required this.onSessionCreated});
 
   @override
@@ -17,41 +17,54 @@ class _YoutubeChatbotFormState extends State<YoutubeChatbotForm> {
   String _youtubeLink = '';
   ChatService chatService = ChatService();
 
+  /// Simple YouTube validator (checks for presence of youtube.com or youtu.be)
+  String? _validateYoutubeLink(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Please enter a YouTube link';
+    }
+    final text = value.trim().toLowerCase();
+    final uri = Uri.tryParse(text);
+    if (uri == null ||
+        (!text.contains('youtube.com') && !text.contains('youtu.be'))) {
+      return 'Please provide a valid YouTube link';
+    }
+    return null; // All good
+  }
+
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
       chatService.uploadYoutube(
         context: context,
         title: _title,
         description: _description,
         youtubeurl: _youtubeLink,
-        callback: (bool success,String sessionID,String fileID) {
+        callback: (bool success, String sessionID, String fileID) {
           if (success) {
-            print("uploaded Succesfull");
-            Map<String, dynamic> newSession = {
+            print("Upload Successful");
+            final newSession = {
               "id": fileID,
               "title": _title,
               "description": _description,
               "sessionID": sessionID,
             };
-            print(newSession);
+            widget.onSessionCreated(newSession);
 
-            widget.onSessionCreated(newSession); // ✅ Update session list
-              ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('YouTube Chatbot session created')),
-      );
-        Navigator.pop(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('YouTube Chatbot session created')),
+            );
+            Navigator.pop(context);
           } else {
-            print("upload unSuccesfull");
+            print("Upload Unsuccessful");
           }
         },
       );
-    
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text(
-                'Please fill all fields and Provide a Valid YouTube Link')),
+          content: Text('Please correct the errors in the form.'),
+        ),
       );
     }
   }
@@ -69,46 +82,60 @@ class _YoutubeChatbotFormState extends State<YoutubeChatbotForm> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                // Title field
                 TextFormField(
                   decoration: const InputDecoration(
-                      labelText: 'Title', border: OutlineInputBorder()),
-                  validator: (value) => value == null || value.isEmpty
+                    labelText: 'Title',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) => value == null || value.trim().isEmpty
                       ? 'Please enter a title'
                       : null,
-                  onSaved: (value) => _title = value!,
+                  onSaved: (value) => _title = value!.trim(),
                 ),
                 const SizedBox(height: 16),
+
+                // Description field
                 TextFormField(
                   decoration: const InputDecoration(
-                      labelText: 'Description', border: OutlineInputBorder()),
+                    labelText: 'Description',
+                    border: OutlineInputBorder(),
+                  ),
                   maxLines: 3,
-                  validator: (value) => value == null || value.isEmpty
+                  validator: (value) => value == null || value.trim().isEmpty
                       ? 'Please enter a description'
                       : null,
-                  onSaved: (value) => _description = value!,
+                  onSaved: (value) => _description = value!.trim(),
                 ),
                 const SizedBox(height: 16),
+
+                // YouTube link field
                 TextFormField(
                   decoration: const InputDecoration(
-                      labelText: 'YouTube Video Link',
-                      border: OutlineInputBorder()),
-                  validator: (value) => value == null || value.isEmpty
-                      ? 'Please enter a YouTube link'
-                      : null,
-                  onSaved: (value) => _youtubeLink = value!,
+                    labelText: 'YouTube Video Link',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: _validateYoutubeLink,
+                  onSaved: (value) => _youtubeLink = value!.trim(),
                 ),
                 const SizedBox(height: 24),
+
+                // Submit button
                 Align(
                   alignment: Alignment.center,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: color3,
                       padding: const EdgeInsets.symmetric(
-                          vertical: 16, horizontal: 32),
+                        vertical: 16,
+                        horizontal: 32,
+                      ),
                     ),
                     onPressed: _submitForm,
-                    child: const Text('Create Session',
-                        style: TextStyle(fontSize: 16)),
+                    child: const Text(
+                      'Create Session',
+                      style: TextStyle(fontSize: 16),
+                    ),
                   ),
                 ),
               ],
