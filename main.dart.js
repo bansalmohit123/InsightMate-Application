@@ -79702,7 +79702,7 @@ A.wR.prototype={
 qa(a,b,c,d){return this.alX(a,b,c,d)},
 alX(a,b,c,d){var s=0,r=A.O(t.H),q,p,o,n,m,l
 var $async$qa=A.K(function(e,f){if(e===1)return A.L(f,r)
-while(true)switch(s){case 0:o=A.cV("http://35.192.164.168/api/auth/login",0,null)
+while(true)switch(s){case 0:o=A.cV("https://insight.mohittt.me/api/auth/login",0,null)
 n=t.N
 m=A.aj(["Content-Type","application/json; charset=UTF-8"],n,n)
 s=2
@@ -79727,7 +79727,7 @@ return A.N($async$qa,r)},
 Ah(a,b,c,d){return this.aog(a,b,c,d)},
 aog(a,b,c,d){var s=0,r=A.O(t.y),q,p,o
 var $async$Ah=A.K(function(e,f){if(e===1)return A.L(f,r)
-while(true)switch(s){case 0:p=A.cV("http://35.192.164.168/api/auth/signup",0,null)
+while(true)switch(s){case 0:p=A.cV("https://insight.mohittt.me/api/auth/signup",0,null)
 o=t.N
 o=A.aj(["Content-Type","application/json; charset=UTF-8"],o,o)
 s=3
@@ -79747,7 +79747,7 @@ return A.P(A.i2(),$async$op)
 case 6:o=c
 n=A.bP(o.a.h(0,"token"))
 if(n==null)o.PG("String","token","")
-h=A.cV("http://35.192.164.168/api/auth/TokenisValid",0,null)
+h=A.cV("https://insight.mohittt.me/api/auth/TokenisValid",0,null)
 g=n
 g.toString
 f=t.N
@@ -79759,7 +79759,7 @@ l=B.G.m5(A.dp(A.dm(g.e).c.a.h(0,"charset")).bl(g.w),null)
 s=J.c(l,!0)?8:9
 break
 case 8:s=10
-return A.P(A.aCU(A.cV("http://35.192.164.168/api/auth/",0,null),A.aj(["Content-Type","application/json; charset=UTF-8","token",n],f,f)),$async$op)
+return A.P(A.aCU(A.cV("https://insight.mohittt.me/api/auth/",0,null),A.aj(["Content-Type","application/json; charset=UTF-8","token",n],f,f)),$async$op)
 case 10:k=c
 h=k
 A.eG(A.dp(A.dm(h.e).c.a.h(0,"charset")).bl(h.w))
@@ -80013,7 +80013,7 @@ s=7
 return A.P(A.i2(),$async$uf)
 case 7:l=a2
 k=A.bP(l.a.h(0,"token"))
-f=A.cV("http://35.192.164.168/api/get/getoption",0,null)
+f=A.cV("https://insight.mohittt.me/api/get/getoption",0,null)
 e=k
 e.toString
 d=t.N
@@ -80102,7 +80102,7 @@ s=6
 return A.P(A.i2(),$async$qx)
 case 6:n=b2
 m=A.bP(n.a.h(0,"token"))
-l=A.aKt("POST",A.cV("http://35.192.164.168/api/document/upload",0,null))
+l=A.aKt("POST",A.cV("https://insight.mohittt.me/api/document/upload",0,null))
 k=$.aFB().am1(a9,null)
 a=k
 if(a!=null)J.asL(a,"/")
@@ -80170,7 +80170,7 @@ while(true)switch(s){case 0:l=A
 s=2
 return A.P(A.i2(),$async$r6)
 case 2:n=l.bP(f.a.h(0,"token"))
-m=A.cV("http://35.192.164.168/api/document/query",0,null)
+m=A.cV("https://insight.mohittt.me/api/document/query",0,null)
 n.toString
 q=t.N
 p=A.aj(["Content-Type","application/json; charset=UTF-8","token",n],q,q)
@@ -80193,7 +80193,7 @@ return A.P(A.i2(),$async$vn)
 case 6:o=a5
 n=A.bP(o.a.h(0,"token"))
 m=A.la(a0,!1,t.nj)
-f=A.cV("http://35.192.164.168/api/url/upload",0,null)
+f=A.cV("https://insight.mohittt.me/api/url/upload",0,null)
 e=n
 e.toString
 d=t.N
@@ -80243,7 +80243,7 @@ s=6
 return A.P(A.i2(),$async$v2)
 case 6:o=a1
 n=A.bP(o.a.h(0,"token"))
-i=A.cV("http://35.192.164.168/api/url/query",0,null)
+i=A.cV("https://insight.mohittt.me/api/url/query",0,null)
 h=n
 h.toString
 g=t.N
@@ -80283,7 +80283,7 @@ return A.P(A.i2(),$async$vo)
 case 6:o=a5
 n=A.bP(o.a.h(0,"token"))
 m=A.la(a0,!1,t.nj)
-f=A.cV("http://35.192.164.168/api/youtube/upload",0,null)
+f=A.cV("https://insight.mohittt.me/api/youtube/upload",0,null)
 e=n
 e.toString
 d=t.N
@@ -80331,7 +80331,7 @@ s=6
 return A.P(A.i2(),$async$v3)
 case 6:o=a1
 n=A.bP(o.a.h(0,"token"))
-i=A.cV("http://35.192.164.168/api/youtube/query",0,null)
+i=A.cV("https://insight.mohittt.me/api/youtube/query",0,null)
 h=n
 h.toString
 g=t.N
@@ -80367,7 +80367,7 @@ WZ(a){var s=0,r=A.O(t.b5),q,p=2,o,n,m,l,k,j
 var $async$vt=A.K(function(b,c){if(b===1){o=c
 s=p}while(true)switch(s){case 0:p=4
 s=7
-return A.P(A.aCU(A.cV("http://35.192.164.168/api/chat/get/"+a,0,null),null),$async$vt)
+return A.P(A.aCU(A.cV("https://insight.mohittt.me/api/chat/get/"+a,0,null),null),$async$vt)
 case 7:n=c
 if(n.b===200){l=n
 m=B.G.bl(A.dp(A.dm(l.e).c.a.h(0,"charset")).bl(l.w))
@@ -80403,7 +80403,7 @@ s=6
 return A.P(A.i2(),$async$ou)
 case 6:o=e
 n=A.bP(o.a.h(0,"token"))
-k=A.cV("http://35.192.164.168/api/chat/save",0,null)
+k=A.cV("https://insight.mohittt.me/api/chat/save",0,null)
 j=n
 j.toString
 i=t.N
