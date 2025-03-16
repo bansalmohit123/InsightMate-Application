@@ -1,1 +1,1 @@
-String uri = 'http://35.192.164.168';
+String uri = 'https://insight.mohittt.me';
