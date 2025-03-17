@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:insightmate/auth/screens/signUp.dart';
 import 'package:insightmate/auth/services/authService.dart';
-import 'package:insightmate/chat/chat_Screen.dart';
 import 'package:insightmate/dashBoard.dart';
 import 'package:insightmate/providers/file.dart';
 import 'package:insightmate/providers/userProvider.dart';
@@ -12,6 +11,7 @@ import 'package:insightmate/routes.dart';
 import 'package:provider/provider.dart';
 
 var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -38,27 +38,45 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-   final AuthService authService = AuthService();
+  final AuthService authService = AuthService();
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    authService.getUserData(context);
+    loadUserData();
   }
+
+  void loadUserData() async {
+    await authService.getUserData(context);
+    setState(() {
+      _isLoading = false; // Set loading to false after data fetched
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool isUserLoggedIn =
-        Provider.of<UserProvider>(context).user.token.isNotEmpty;  
     return MaterialApp(
       title: 'Responsive Flutter Web App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor:const  Color(0xFF00458B),
-        hintColor:const  Color(0xFF3FD2C7),
+        primaryColor: const Color(0xFF00458B),
+        hintColor: const Color(0xFF3FD2C7),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: isUserLoggedIn?const DashboardPage(): const SignUpPage(),
-      // home: const SignUpPage(),
+      home: _isLoading
+          ? const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            )
+          : Consumer<UserProvider>(
+              builder: (context, userProvider, child) {
+                bool isUserLoggedIn = userProvider.user.token != null &&
+                    userProvider.user.token.isNotEmpty;
+                return isUserLoggedIn
+                    ? const DashboardPage()
+                    : const SignUpPage();
+              },
+            ),
       onGenerateRoute: (settings) => generateRoute(settings),
     );
   }

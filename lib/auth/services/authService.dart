@@ -39,7 +39,7 @@ class AuthService {
           await prefs.setString('token', data['token']);
 
           final userProvider = Provider.of<UserProvider>(context, listen: false);
-          userProvider.setUser(response.body);
+           userProvider.setUserFromModel(User.fromMap(data)); // <-- safer parsing
 
           print("User Token: ${userProvider.user.token}");
           callback(true);
@@ -100,7 +100,7 @@ class AuthService {
   }
 
   // Get User Data Function
-  void getUserData(BuildContext context) async {
+  Future<void> getUserData(BuildContext context) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('token');
@@ -132,10 +132,12 @@ class AuthService {
         );
 
         if (userRes.statusCode == 200) {
-          print("User Data: ${userRes.body}");
-          var userProvider = Provider.of<UserProvider>(context, listen: false);
-          userProvider.setUser(userRes.body);
-        } else {
+  print("User Data: ${userRes.body}");
+  var userProvider = Provider.of<UserProvider>(context, listen: false);
+  userProvider.setUserFromModel(User.fromMap(jsonDecode(userRes.body))); // <-- Safe parsing
+}
+
+        else {
           print("Failed to get user data: ${userRes.body}");
         }
       } else {
