@@ -33,14 +33,14 @@ class AuthService {
       if (response.statusCode == 200) {
         Map<String, dynamic> data = json.decode(response.body);
         print("Login Response: $data");
-
+        print("+++++++");
         if (data['token'] != null) {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString('token', data['token']);
-
+          // SharedPreferences prefs = await SharedPreferences.getInstance();
+          // await prefs.setString('token', data['token']);
+          print("--------");
           final userProvider = Provider.of<UserProvider>(context, listen: false);
            userProvider.setUserFromModel(User.fromMap(data)); // <-- safer parsing
-
+          print("********");
           print("User Token: ${userProvider.user.token}");
           callback(true);
         } else {
