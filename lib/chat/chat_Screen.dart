@@ -84,6 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
     });
 
     await _chatService.sendMessage(
+      context: context,
       sessionId: widget.sessionID,
       sender: "user",
       message: text,
@@ -141,6 +142,7 @@ class _ChatScreenState extends State<ChatScreen> {
       });
 
       _chatService.sendMessage(
+        context: context,
         sessionId: widget.sessionID,
         sender: "bot",
         message: response,

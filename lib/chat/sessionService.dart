@@ -28,13 +28,14 @@ class Sessionservice {
       UserProvider userProvider =
           Provider.of<UserProvider>(context, listen: false);
       var userId = userProvider.user.id;
-       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+      //  SharedPreferences prefs = await SharedPreferences.getInstance();
+      // String? token = prefs.getString('token');
+      String? token = userProvider.user.token;
       final response = await http.post(
         Uri.parse('$uri/api/get/getoption'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': token!,
+          'token': token,
         },
         body: jsonEncode(<String, dynamic>{
           'option': option,

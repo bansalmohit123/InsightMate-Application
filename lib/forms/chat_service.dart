@@ -95,8 +95,10 @@ class ChatService {
       required String documentId,
       required void Function(String success) callback,
    }) async {
-     SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+    //  SharedPreferences prefs = await SharedPreferences.getInstance();
+    //   String? token = prefs.getString('token');
+    UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+    String token = userProvider.user.token;
       final response = await http.post(
         Uri.parse('$uri/api/document/query'),
         headers: <String, String>{
@@ -131,14 +133,16 @@ class ChatService {
     required void Function(bool success,String sessionI,String fileID) callback,
    })async{
       try{
-         SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
-          UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+      //    SharedPreferences prefs = await SharedPreferences.getInstance();
+      // String? token = prefs.getString('token');
+      //     UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+       UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+    String token = userProvider.user.token;
         var response = await http.post(
           Uri.parse('$uri/api/url/upload'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
-            'token': token!,
+            'token': token,
           },
           body: jsonEncode(<String, String>{
             'title': title,
@@ -174,13 +178,13 @@ class ChatService {
     required void Function(String success) callback,
    })async{
       try{
-         SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+         UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+    String token = userProvider.user.token;
         var response = await http.post(
           Uri.parse('$uri/api/url/query'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
-            'token': token!,
+            'token': token,
           },
           body: jsonEncode(<String, String>{
             'question': question,
@@ -210,14 +214,16 @@ class ChatService {
     required void Function(bool success,String sessionID,String fileID) callback,
    })async{
       try{
-         SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
-          UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+      //    SharedPreferences prefs = await SharedPreferences.getInstance();
+      // String? token = prefs.getString('token');
+      //     UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+       UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+    String token = userProvider.user.token;
         var response = await http.post(
           Uri.parse('$uri/api/youtube/upload'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
-            'token': token!,
+            'token': token,
           },
           body: jsonEncode(<String, String>{
             'title': title,
@@ -251,13 +257,13 @@ class ChatService {
     required void Function(String success) callback,
    })async{
       try{
-         SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+       UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+    String token = userProvider.user.token;
         var response = await http.post(
           Uri.parse('$uri/api/youtube/query'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
-            'token': token!,
+            'token': token,
           },
           body: jsonEncode(<String, String>{
             'question': question,
@@ -305,18 +311,19 @@ class ChatService {
 
   // ✅ Save chat messages (User + Bot)
   Future<void> sendMessage({
+    required BuildContext context,
     required String sessionId,
     required String sender,
     required String message,
   }) async {
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+       UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+    String token = userProvider.user.token;
       final response = await http.post(
         Uri.parse('$uri/api/chat/save'),
         headers: {
           "Content-Type": "application/json",
-            "token": token!
+            "token": token
         },
         body: jsonEncode({
           "sessionId": sessionId,
