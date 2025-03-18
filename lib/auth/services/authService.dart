@@ -70,22 +70,26 @@ class AuthService {
     required String password,
   }) async {
     try {
-      User user = User(
-        id: '',
-        username: username,
-        password: password,
-        email: email,
-        token: '',
-      );
+      // User user = User(
+      //   id: '',
+      //   username: username,
+      //   password: password,
+      //   email: email,
+      //   token: '',
+      // );
 
       final response = await http.post(
         Uri.parse('$uri/api/auth/signup'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-       body: jsonEncode(user.toJson()),
+       body: jsonEncode(<String, String>{
+          'username': username,
+          'email': email,
+          'password': password,
+        }),
       );
-
+      print("Register Response: ${response.body}");
       if (response.statusCode == 200) {
         print("Registration Success: ${response.body}");
         return true;
