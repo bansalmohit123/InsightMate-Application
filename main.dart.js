@@ -79715,7 +79715,7 @@ zt(a,b,c,d){return this.alS(a,b,c,d)},
 alS(a,b,c,d){var s=0,r=A.O(t.H),q=1,p,o,n,m,l,k,j,i,h,g
 var $async$zt=A.K(function(e,f){if(e===1){p=f
 s=q}while(true)switch(s){case 0:q=3
-k=A.cY("https://insight.mohittt.me/api/auth/login",0,null)
+k=A.cY("https://insightmate-backend.onrender.com/api/auth/login",0,null)
 j=t.N
 i=A.aj(["Content-Type","application/json; charset=UTF-8"],j,j)
 s=6
@@ -79751,7 +79751,7 @@ Ad(a,b,c,d){return this.aob(a,b,c,d)},
 aob(a,b,c,d){var s=0,r=A.O(t.y),q,p=2,o,n,m,l,k,j,i,h
 var $async$Ad=A.K(function(e,f){if(e===1){o=f
 s=p}while(true)switch(s){case 0:p=4
-l=A.cY("https://insight.mohittt.me/api/auth/signup",0,null)
+l=A.cY("https://insightmate-backend.onrender.com/api/auth/signup",0,null)
 k=t.N
 j=A.aj(["Content-Type","application/json; charset=UTF-8"],k,k)
 s=7
@@ -79796,14 +79796,14 @@ if(m==null||J.cd(m)===0){A.cJ("No token found, skipping getUserData")
 s=1
 break}g=t.N
 s=8
-return A.R(A.m1(A.cY("https://insight.mohittt.me/api/auth/TokenisValid",0,null),null,A.aj(["Content-Type","application/json; charset=UTF-8","token",m],g,g)),$async$ol)
+return A.R(A.m1(A.cY("https://insightmate-backend.onrender.com/api/auth/TokenisValid",0,null),null,A.aj(["Content-Type","application/json; charset=UTF-8","token",m],g,g)),$async$ol)
 case 8:l=c
 f=l
 k=B.K.l3(A.cQ(A.cP(f.e).c.a.h(0,"charset")).bf(f.w),null)
 s=J.c(k,!0)?9:11
 break
 case 9:s=12
-return A.R(A.aCW(A.cY("https://insight.mohittt.me/api/auth/",0,null),A.aj(["Content-Type","application/json; charset=UTF-8","token",m],g,g)),$async$ol)
+return A.R(A.aCW(A.cY("https://insightmate-backend.onrender.com/api/auth/",0,null),A.aj(["Content-Type","application/json; charset=UTF-8","token",m],g,g)),$async$ol)
 case 12:j=c
 if(j.b===200){g=j
 A.cJ("User Data: "+A.cQ(A.cP(g.e).c.a.h(0,"charset")).bf(g.w))
@@ -80061,7 +80061,7 @@ s=p}while(true)switch(s){case 0:p=4
 n=A.ht(a,!1,t.nj)
 m=n.a.a
 l=n.a.e
-g=A.cY("https://insight.mohittt.me/api/get/getoption",0,null)
+g=A.cY("https://insightmate-backend.onrender.com/api/get/getoption",0,null)
 f=t.N
 e=A.aj(["Content-Type","application/json; charset=UTF-8","token",l],f,f)
 s=7
@@ -80148,7 +80148,7 @@ s=6
 return A.R(A.O0(),$async$qs)
 case 6:n=b2
 m=A.co(n.a.h(0,"token"))
-l=A.aKw("POST",A.cY("https://insight.mohittt.me/api/document/upload",0,null))
+l=A.aKw("POST",A.cY("https://insightmate-backend.onrender.com/api/document/upload",0,null))
 k=$.aFE().alX(a9,null)
 a=k
 if(a!=null)J.asO(a,"/")
@@ -80213,7 +80213,7 @@ vW(a,b,c,d){return this.a1v(a,b,c,d)},
 a1v(a,b,c,d){var s=0,r=A.O(t.H),q,p,o,n
 var $async$vW=A.K(function(e,f){if(e===1)return A.L(f,r)
 while(true)switch(s){case 0:p=A.ht(b,!1,t.nj).a
-o=A.cY("https://insight.mohittt.me/api/document/query",0,null)
+o=A.cY("https://insightmate-backend.onrender.com/api/document/query",0,null)
 n=t.N
 p=A.aj(["Content-Type","application/json; charset=UTF-8","token",p.e],n,n)
 s=2
@@ -80232,7 +80232,7 @@ var $async$Ax=A.K(function(a3,a4){if(a3===1){p=a4
 s=q}while(true)switch(s){case 0:q=3
 o=A.ht(b,!1,t.nj)
 n=o.a.e
-g=A.cY("https://insight.mohittt.me/api/url/upload",0,null)
+g=A.cY("https://insightmate-backend.onrender.com/api/url/upload",0,null)
 f=t.N
 e=A.aj(["Content-Type","application/json; charset=UTF-8","token",n],f,f)
 s=6
@@ -80278,7 +80278,7 @@ var $async$A7=A.K(function(a0,a1){if(a0===1){p=a1
 s=q}while(true)switch(s){case 0:q=3
 o=A.ht(b,!1,t.nj)
 n=o.a.e
-i=A.cY("https://insight.mohittt.me/api/url/query",0,null)
+i=A.cY("https://insightmate-backend.onrender.com/api/url/query",0,null)
 h=t.N
 g=A.aj(["Content-Type","application/json; charset=UTF-8","token",n],h,h)
 s=6
@@ -80313,7 +80313,7 @@ var $async$Ay=A.K(function(a3,a4){if(a3===1){p=a4
 s=q}while(true)switch(s){case 0:q=3
 o=A.ht(b,!1,t.nj)
 n=o.a.e
-g=A.cY("https://insight.mohittt.me/api/youtube/upload",0,null)
+g=A.cY("https://insightmate-backend.onrender.com/api/youtube/upload",0,null)
 f=t.N
 e=A.aj(["Content-Type","application/json; charset=UTF-8","token",n],f,f)
 s=6
@@ -80357,7 +80357,7 @@ var $async$A8=A.K(function(a0,a1){if(a0===1){p=a1
 s=q}while(true)switch(s){case 0:q=3
 o=A.ht(b,!1,t.nj)
 n=o.a.e
-i=A.cY("https://insight.mohittt.me/api/youtube/query",0,null)
+i=A.cY("https://insightmate-backend.onrender.com/api/youtube/query",0,null)
 h=t.N
 g=A.aj(["Content-Type","application/json; charset=UTF-8","token",n],h,h)
 s=6
@@ -80391,7 +80391,7 @@ WW(a){var s=0,r=A.O(t.b5),q,p=2,o,n,m,l,k,j
 var $async$vj=A.K(function(b,c){if(b===1){o=c
 s=p}while(true)switch(s){case 0:p=4
 s=7
-return A.R(A.aCW(A.cY("https://insight.mohittt.me/api/chat/get/"+a,0,null),null),$async$vj)
+return A.R(A.aCW(A.cY("https://insightmate-backend.onrender.com/api/chat/get/"+a,0,null),null),$async$vj)
 case 7:n=c
 if(n.b===200){l=n
 m=B.K.bf(A.cQ(A.cP(l.e).c.a.h(0,"charset")).bf(l.w))
@@ -80425,7 +80425,7 @@ var $async$qJ=A.K(function(e,f){if(e===1){p=f
 s=q}while(true)switch(s){case 0:q=3
 o=A.ht(a,!1,t.nj)
 n=o.a.e
-k=A.cY("https://insight.mohittt.me/api/chat/save",0,null)
+k=A.cY("https://insightmate-backend.onrender.com/api/chat/save",0,null)
 j=t.N
 i=A.aj(["Content-Type","application/json","token",n],j,j)
 s=6
