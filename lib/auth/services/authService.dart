@@ -106,8 +106,8 @@ class AuthService {
   // Get User Data Function
   Future<void> getUserData(BuildContext context) async {
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+      UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+    String token = userProvider.user.token;
 
       if (token == null || token.isEmpty) {
         print("No token found, skipping getUserData");

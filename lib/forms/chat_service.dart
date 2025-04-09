@@ -27,8 +27,8 @@ class ChatService {
   }) async {
     try {
        String fileExtension = path.extension(fileName); // Example: ".pdf"
-       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+       UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+    String token = userProvider.user.token;
       var request = http.MultipartRequest('POST', Uri.parse('$uri/api/document/upload'));
       
       String? mimeType = lookupMimeType(fileName); // Detect MIME type dynamically
@@ -57,7 +57,7 @@ class ChatService {
       }
 
       // Add metadata (title & description)
-      UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+     
       request.fields['userId'] = userProvider.user.id;
       request.fields['title'] = title;
       request.fields['description'] = description;
