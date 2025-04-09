@@ -1,1 +1,1 @@
-String uri = 'https://insight.mohittt.me';
+String uri = 'https://insightmate-backend.onrender.com';
